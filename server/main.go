@@ -9,12 +9,14 @@ import (
 )
 
 func main() {
-    e := echo.New()
-    
-    mysql.DatabaseInit()
-    database.RunMigration()
+	e := echo.New()
 
-    routes.RouteInit(e.Group("/api/v1"))
+	mysql.DatabaseInit()
+	database.RunMigration()
 
-    e.Logger.Fatal(e.Start("localhost:5000"))
+	routes.RouteInit(e.Group("/api/v1"))
+
+	e.Static("/uploads", "./uploads")
+
+	e.Logger.Fatal(e.Start("localhost:5000"))
 }
