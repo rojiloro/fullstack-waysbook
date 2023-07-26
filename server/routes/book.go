@@ -15,4 +15,5 @@ func BookRoutes(e *echo.Group) {
 
 	e.POST("/addbook", middleware.UploadFile(h.AddBook))
 	e.GET("/getbooks", h.FindBooks)
+	e.GET("/getbook/:id", h.GetBook)
 }
