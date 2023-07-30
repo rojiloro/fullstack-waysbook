@@ -5,6 +5,7 @@ type LoginResponse struct {
 	Fullname string `json:"fullname" form:"email" validate:"required"`
 	Role     string `json:"role" form:"role" validate:"required"`
 	Token    string `json:"token" form:"token"`
+	Avatar   string `json:"avatar" form:"avatar"`
 }
 
 type RegisterResponse struct {

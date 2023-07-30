@@ -10,7 +10,7 @@ import (
 
 func UploadFile(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		file, err := c.FormFile("thumbnail")
+		file, err := c.FormFile("image")
 		if file != nil {
 
 			if err != nil {
@@ -38,39 +38,6 @@ func UploadFile(next echo.HandlerFunc) echo.HandlerFunc {
 			return next(c)
 		}
 		c.Set("dataFile", "")
-		return next(c)
-	}
-}
-func UploadFileProfile(next echo.HandlerFunc) echo.HandlerFunc {
-	return func(c echo.Context) error {
-		file, err := c.FormFile("photo")
-		if file != nil {
-
-			if err != nil {
-				return c.JSON(http.StatusBadRequest, err)
-			}
-
-			src, err := file.Open()
-			if err != nil {
-				return c.JSON(http.StatusBadRequest, err)
-			}
-			defer src.Close()
-
-			tempFile, err := ioutil.TempFile("uploads", "image-*.png")
-			if err != nil {
-				return c.JSON(http.StatusBadRequest, err)
-			}
-
-			if _, err = io.Copy(tempFile, src); err != nil {
-				return c.JSON(http.StatusBadRequest, err)
-			}
-
-			data := tempFile.Name()
-
-			c.Set("dataFileProfile", data)
-			return next(c)
-		}
-		c.Set("dataFileProfile", "")
 		return next(c)
 	}
 }

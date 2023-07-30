@@ -9,5 +9,5 @@ type BookRequest struct {
 	Price           int    `json:"price" form:"price" validate:"required"`
 	Description     string `json:"description" form:"description" validate:"required"`
 	BookAttachment  string `json:"bookattachment" form:"bookattachment" validate:"required"`
-	Thumbnail       string `json:"thumbnail" form:"thumbnail" validate:"required"`
+	Thumbnail       string `json:"thumbnail" form:"image"`
 }

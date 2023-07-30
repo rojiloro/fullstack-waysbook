@@ -6,3 +6,11 @@ type UserResponse struct {
 	Email    string `json:"email" form:"email" validate:"required"`
 	Password string `json:"password" form:"password" validate:"required"`
 }
+
+type UpdateUserResponse struct {
+	Email   string `json:"email" form:"email"`
+	Gender  string `json:"gender" form:"gender"`
+	Address string `json:"address" form:"address"`
+	Phone   string `json:"phone" form:"phone"`
+	Avatar  string `json:"avatar" form:"image"`
+}

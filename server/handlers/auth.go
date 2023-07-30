@@ -42,15 +42,14 @@ func (h *handlerAuth) Register(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()})
 	}
 
-	user := models.User{
-		Email: request.Email,
+	user := models.UserRegisterResponse{
+		Email:    request.Email,
 		Password: password,
 		Fullname: request.Fullname,
-		Role: "user",
+		Role:     "user",
 	}
 
 	data, err := h.AuthRepository.Register(user)
-
 
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, dto.ErrorResult{Code: http.StatusInternalServerError, Message: err.Error()})
@@ -66,7 +65,7 @@ func (h *handlerAuth) Login(c echo.Context) error {
 	}
 
 	user := models.User{
-		Email: request.Email,
+		Email:    request.Email,
 		Password: request.Password,
 	}
 
@@ -91,11 +90,21 @@ func (h *handlerAuth) Login(c echo.Context) error {
 	}
 
 	loginResponse := authdto.LoginResponse{
-		Email: user.Email,
+		Email:    user.Email,
 		Fullname: user.Fullname,
-		Role: user.Role,
-		Token: token,
+		Role:     user.Role,
+		Token:    token,
+		Avatar:   user.Avatar,
 	}
 
 	return c.JSON(http.StatusOK, dto.SuccessResult{Code: http.StatusOK, Data: loginResponse})
+}
+
+func (h *handlerAuth) CheckAuth(c echo.Context) error {
+	userLogin := c.Get("userLogin")
+	userId := userLogin.(jwt.MapClaims)["id"].(float64)
+
+	user, _ := h.AuthRepository.CheckAuth(int(userId))
+
+	return c.JSON(http.StatusOK, dto.SuccessResult{Code: http.StatusOK, Data: user})
 }

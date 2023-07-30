@@ -8,10 +8,10 @@ import (
 
 type UserRepositories interface {
 	FindUsers() ([]models.User, error)
-	GetUser(ID int)(models.User, error)
-	CreateUser(user models.User)(models.User, error)
-	UpdateUser(user models.User, ID int)(models.User, error)
-	DeleteUser(user models.User, ID int)(models.User, error)
+	GetUser(ID int) (models.UserProfileResponse, error)
+	CreateUser(user models.User) (models.User, error)
+	UpdateUser(user models.UserProfileResponse) (models.UserProfileResponse, error)
+	DeleteUser(user models.User, ID int) (models.User, error)
 }
 
 type repository struct {
@@ -28,8 +28,8 @@ func (r *repository) FindUsers() ([]models.User, error) {
 
 	return users, err
 }
-func (r *repository) GetUser(ID int) (models.User, error) {
-	var user models.User
+func (r *repository) GetUser(ID int) (models.UserProfileResponse, error) {
+	var user models.UserProfileResponse
 	err := r.db.First(&user, ID).Error
 
 	return user, err
@@ -41,7 +41,7 @@ func (r *repository) CreateUser(user models.User) (models.User, error) {
 	return user, err
 }
 
-func (r *repository) UpdateUser(user models.User, ID int) (models.User, error) {
+func (r *repository) UpdateUser(user models.UserProfileResponse) (models.UserProfileResponse, error) {
 	err := r.db.Save(&user).Error
 
 	return user, err
