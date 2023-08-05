@@ -1,7 +1,8 @@
 package cartdto
 
 type CartResponse struct {
-	TransactionId int `json:"transaction_id" form:"transaction_id"`
-	SubTotal      int `json:"subtotal" form:"subtotal"`
-	Qty           int `json:"qty" form:"qty"`
+	ID       int `json:"id"`
+	OrderID  int `json:"order_id" form:"order_id"`
+	Subtotal int `json:"subtotal" form:"subtotal"`
+	Qty      int `json:"qty" form:"qty"`
 }

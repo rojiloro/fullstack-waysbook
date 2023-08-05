@@ -2,14 +2,20 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Navbar, Nav, Button, Dropdown } from "react-bootstrap";
 import { Image } from "react-bootstrap";
 import brand from "../../assets/image/Frame.png";
+import cart from "../../assets/image/Group (2).png";
 import Login from "../auth/Login";
 import Register from "../auth/Register";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import { useContext, useState } from "react";
 import ProfilePhoto from "../../assets/image/ruka.jpg";
-import { Cart4 } from "react-bootstrap-icons";
+import knowledge from "../../assets/image/knowledge 1.png";
+import Chat from "../../assets/image/Group (1).png";
+import Out from "../../assets/image/logout 1.png";
+import iconProfile from "../../assets/image/user 2.png";
+
 import { API, setAuthToken } from "../../config/api";
+import { Book } from "react-bootstrap-icons";
 
 export default function Header(props) {
   const [ShowLogin, setShowLogin] = useState(false);
@@ -43,18 +49,28 @@ export default function Header(props) {
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       <Dropdown.Item>
-                        <Link to="/addbook" style={{ display: "flex", textDecoration: "none" }}>
-                          <p>Add Book</p>
+                        <Link to="/addbook" style={{ display: "flex", textDecoration: "none", color: "#000" }}>
+                          <img src={knowledge} style={{ width: "2rem", height: "2rem" }} />
+                          <p style={{ marginTop: "3px", marginLeft: "7px" }}>Add Book</p>
                         </Link>
                       </Dropdown.Item>
                       <Dropdown.Item>
-                        <Link to="/listtransaction" style={{ display: "flex", textDecoration: "none" }}>
-                          <p>List Transaction</p>
+                        <Link to="/listtransaction" style={{ display: "flex", textDecoration: "none", color: "#000" }}>
+                          <Book size={5} style={{ width: "2rem", height: "2rem" }} />
+                          <p style={{ marginTop: "3px", marginLeft: "7px" }}>List Transaction</p>
                         </Link>
                       </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Link to="/complain" style={{ display: "flex", textDecoration: "none", color: "#000" }}>
+                          <img src={Chat} style={{ width: "2rem", height: "2rem" }} />
+                          <p style={{ marginTop: "3px", marginLeft: "7px" }}>Complain</p>
+                        </Link>
+                      </Dropdown.Item>
+                      <hr></hr>
                       <Dropdown.Item onClick={logout}>
-                        <Link to="/" style={{ display: "flex", textDecoration: "none" }}>
-                          <p>Log out</p>
+                        <Link to="/" style={{ display: "flex", textDecoration: "none", color: "#000" }}>
+                          <img src={Out} style={{ width: "2rem", height: "2rem" }} />
+                          <p style={{ marginTop: "3px", marginLeft: "7px" }}>Log out</p>
                         </Link>
                       </Dropdown.Item>
                     </Dropdown.Menu>
@@ -64,7 +80,8 @@ export default function Header(props) {
                 <>
                   <Link to="/cart" style={{ marginTop: "1.2rem", marginRight: "1rem" }}>
                     <div>
-                      <Cart4 size={30} style={{ textDecoration: "none", color: "#000" }} />
+                      <span class="position-absolute translate-middle badge rounded-pill bg-danger">2</span>
+                      <img src={cart}></img>
                     </div>
                   </Link>
                   <Dropdown>
@@ -73,13 +90,22 @@ export default function Header(props) {
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       <Dropdown.Item>
-                        <Link to="/profile" style={{ display: "flex", textDecoration: "none" }}>
-                          <p>Profile</p>
+                        <Link to="/profile" style={{ display: "flex", textDecoration: "none", color: "#000" }}>
+                          <img src={iconProfile} style={{ width: "2rem", height: "2rem" }} />
+                          <p style={{ marginTop: "3px", marginLeft: "7px" }}>Profile</p>
                         </Link>
                       </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Link to="/complain" style={{ display: "flex", textDecoration: "none", color: "#000" }}>
+                          <img src={Chat} style={{ width: "2rem", height: "2rem" }} />
+                          <p style={{ marginTop: "3px", marginLeft: "7px" }}>Complain</p>
+                        </Link>
+                      </Dropdown.Item>
+                      <hr></hr>
                       <Dropdown.Item onClick={logout}>
-                        <Link to="/" style={{ display: "flex", textDecoration: "none" }}>
-                          <p>Log out</p>
+                        <Link to="/" style={{ display: "flex", textDecoration: "none", color: "#000" }}>
+                          <img src={Out} style={{ width: "2rem", height: "2rem" }} />
+                          <p style={{ marginTop: "3px", marginLeft: "7px" }}>Log out</p>
                         </Link>
                       </Dropdown.Item>
                     </Dropdown.Menu>

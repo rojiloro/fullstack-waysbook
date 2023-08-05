@@ -3,11 +3,13 @@ package models
 import "time"
 
 type Cart struct {
-	ID            int                     `json:"id" gorm:"primarykey:autoIncrement"`
-	TransactionId int                     `json:"transaction_id"`
-	Transaction   TransactionCartResponse `json:"transaction" gorm:"foreignkey:TransactionId"`
-	Subtotal      int                     `json:"subtotal" gorm:"int"`
-	Qty           int                     `json:"qty" gorm:"int"`
-	CreatedAt     time.Time               `json:"-"`
-	UpdatedAt     time.Time               `json:"-"`
+	ID            int               `json:"id" gorm:"primarykey:autoIncrement"`
+	BookId        int               `json:"book_id"`
+	Book          BookOrderResponse `json:"book"`
+	Subtotal      int               `json:"subtotal" gorm:"int"`
+	Qty           int               `json:"qty" gorm:"int"`
+	TransactionId int               `json:"-" gorm:"transaction_id"`
+	Transaction   Transaction       `json:"-"`
+	CreatedAt     time.Time         `json:"-"`
+	UpdatedAt     time.Time         `json:"-"`
 }

@@ -10,10 +10,13 @@ import (
 )
 
 func TransactionRoutes(e *echo.Group) {
-	t := repositories.RepositoryTransaction(mysql.DB)
-	u := repositories.RepositoryUser(mysql.DB)
-	h := handlers.HandlerTransaction(t, u)
+	transaction := repositories.RepositoryTransaction(mysql.DB)
+	cart := repositories.RepositoryCart(mysql.DB)
+	order := repositories.RepositoryOrder(mysql.DB)
 
-	e.POST("/transaction", middleware.Auth(h.CreateTransaction))
+	h := handlers.HandlerTransaction(transaction, cart, order)
+
+	e.GET("/user-transaction", middleware.Auth(h.GetBuyerTransaction))
 	e.GET("/transactions", h.FindTransaction)
+	e.POST("/transaction", middleware.Auth(h.CreateTransaction))
 }

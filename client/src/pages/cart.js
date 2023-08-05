@@ -37,28 +37,9 @@ export default function Cart() {
               <Trash size={30} />
             </div>
           </div>
-          <div className="d-flex mb-3">
-            <div>
-              <Image src={book2} />
-            </div>
-            <div className="mx-5">
-              <div className="fs-5" style={{ fontFamily: "serif" }}>
-                <p>My Own Private Mr. Cool</p>
-              </div>
-              <div style={{ color: "grey", marginTop: "-0.5rem" }}>
-                <p>By. Indah Hanaco</p>
-              </div>
-              <div className="fw-bold fs-5" style={{ color: "green" }}>
-                <p>Rp.75.000</p>
-              </div>
-            </div>
-            <div style={{ marginLeft: "5.3rem", cursor: "pointer" }}>
-              <Trash size={30} />
-            </div>
-          </div>
-
           <hr style={{ width: "100%" }}></hr>
         </div>
+        {/* bagian total */}
         <div style={{ width: "35%" }}>
           <div style={{ marginTop: "12rem", marginLeft: "3rem" }}>
             <hr style={{ width: "100%" }}></hr>

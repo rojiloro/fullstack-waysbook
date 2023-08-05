@@ -16,19 +16,10 @@ type Book struct {
 }
 
 type BookProfileResponse struct {
-	ID              int       `json:"id" form:"id"`
-	Title           string    `json:"title" form:"title"`
-	PublicationDate time.Time `json:"publication_date" form:"publication_date"`
-	Pages           int       `json:"pages" form:"pages"`
-	ISBN            string    `json:"ISBN" form:"ISBN"`
-	Author          string    `json:"author" form:"author"`
-	Price           int       `json:"price" form:"price"`
-	Description     string    `json:"description" form:"description"`
-	BookAttachment  string    `json:"bookattachment" form:"bookattachment"`
-	Thumbnail       string    `json:"thumbnail" form:"thumbnail"`
+	ID int `json:"id" form:"id"`
 }
 
-type BookTransactionResponse struct {
+type BookOrderResponse struct {
 	ID              int       `json:"id" form:"id"`
 	Title           string    `json:"title" form:"title"`
 	PublicationDate time.Time `json:"publication_date" form:"publication_date"`
@@ -45,6 +36,6 @@ func (BookProfileResponse) TableName() string {
 	return "books"
 }
 
-func (BookTransactionResponse) TableName() string {
+func (BookOrderResponse) TableName() string {
 	return "books"
 }

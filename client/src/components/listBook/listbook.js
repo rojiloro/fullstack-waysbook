@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
 import { Card } from "react-bootstrap";
+import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import book2 from "../../assets/image/Rectangle 9.png";
+import { API } from "../../config/api";
 import { UserContext } from "../../context/userContext";
-import { Link } from "react-router-dom";
+
 import Login from "../auth/Login";
 import Register from "../auth/Register";
 
@@ -12,84 +14,42 @@ export default function Listbook() {
   const [state] = useContext(UserContext);
   const [ShowLogin, setShowLogin] = useState(false);
   const [ShowRegister, setShowRegister] = useState(false);
+
+  let { data: book, refetch } = useQuery("BooksCache", async () => {
+    const response = await API.get("/getbooks");
+    console.log("ini response find", response.data.data);
+    return response.data.data;
+  });
+
+  
   return (
     <>
-      <div className="d-flex gap-3">
-        <div
-          className="shadow"
-          onClick={() => {
-            !state.isLogin ? setShowLogin(true) : navigate("/detailBook");
-          }}
-        >
-          <Card style={{ cursor: "pointer" }}>
-            <Card.Img src={book2} />
-            <Card.Body className="lh-1">
-              <Card.Title className="fs-4" style={{ fontFamily: "serif" }}>
-                My Own Private Mr. Cool
-              </Card.Title>
-              <Card.Text className="fst-italic" style={{ color: "grey" }}>
-                By. Indah Hanaco
-              </Card.Text>
-              <Card.Text className="fw-bold fs-4" style={{ color: "green" }}>
-                Rp. 75.000
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </div>
-        <Link to="/detailBook" style={{ textDecoration: "none" }}>
-          <div className="shadow">
-            <Card style={{ cursor: "pointer" }}>
-              <Card.Img src={book2} />
+      <div className="d-flex flex-wrap justify-content-center gap-3 mb-3">
+        {book?.map((data, index) => (
+          <div
+            key={index}
+            value={data.id}
+            className="shadow"
+            onClick={() => {
+              !state.isLogin ? setShowLogin(true) : navigate("/detailBook/" + data.id);
+            }}
+          >
+            <Card style={{ cursor: "pointer", width: "250px" }}>
+              <Card.Img src={data.thumbnail} />
               <Card.Body className="lh-1">
                 <Card.Title className="fs-4" style={{ fontFamily: "serif" }}>
-                  My Own Private Mr. Cool
+                  {data.title}
                 </Card.Title>
                 <Card.Text className="fst-italic" style={{ color: "grey" }}>
-                  By. Indah Hanaco
+                  {data.author}
                 </Card.Text>
                 <Card.Text className="fw-bold fs-4" style={{ color: "green" }}>
-                  Rp. 75.000
+                  {data.price}
                 </Card.Text>
               </Card.Body>
             </Card>
           </div>
-        </Link>
-        <Link to="/detailBook" style={{ textDecoration: "none" }}>
-          <div className="shadow">
-            <Card style={{ cursor: "pointer" }}>
-              <Card.Img src={book2} />
-              <Card.Body className="lh-1">
-                <Card.Title className="fs-4" style={{ fontFamily: "serif" }}>
-                  My Own Private Mr. Cool
-                </Card.Title>
-                <Card.Text className="fst-italic" style={{ color: "grey" }}>
-                  By. Indah Hanaco
-                </Card.Text>
-                <Card.Text className="fw-bold fs-4" style={{ color: "green" }}>
-                  Rp. 75.000
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </div>
-        </Link>
-        <Link to="/detailBook" style={{ textDecoration: "none" }}>
-          <div className="shadow">
-            <Card style={{ cursor: "pointer" }}>
-              <Card.Img src={book2} />
-              <Card.Body className="lh-1">
-                <Card.Title className="fs-4" style={{ fontFamily: "serif" }}>
-                  My Own Private Mr. Cool
-                </Card.Title>
-                <Card.Text className="fst-italic" style={{ color: "grey" }}>
-                  By. Indah Hanaco
-                </Card.Text>
-                <Card.Text className="fw-bold fs-4" style={{ color: "green" }}>
-                  Rp. 75.000
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </div>
-        </Link>
+        ))}
       </div>
       <Login show={ShowLogin} showLogin={setShowLogin} showRegister={setShowRegister} />
       <Register show={ShowRegister} showRegister={setShowRegister} showLogin={setShowLogin} />

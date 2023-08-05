@@ -13,6 +13,7 @@ import ListTransaction from "./pages/listTransaction";
 import AddBook from "./pages/addBook";
 import Profile from "./pages/profile";
 import EditProfile from "./pages/editProfile";
+import Complain from "./pages/complain";
 function App() {
   let navigate = useNavigate();
   const [state, dispatch] = useContext(UserContext);
@@ -64,15 +65,17 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route exact path="/" element={<PrivateRouteAdmin />}>
-            <Route path="/detailBook" element={<DetailBook />} />
+            <Route path="/detailBook/:id" element={<DetailBook />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/editprofile/:id" element={<EditProfile />} />
+            <Route path="/complain" element={<Complain />} />
           </Route>
 
           <Route exact path="/" element={<PrivateRoute />}>
             <Route path="/listtransaction" element={<ListTransaction />} />
             <Route path="/addbook" element={<AddBook />} />
+            <Route path="/complain" element={<Complain />} />
           </Route>
         </Routes>
       )}

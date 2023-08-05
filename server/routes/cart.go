@@ -10,9 +10,10 @@ import (
 
 func CartRoutes(e *echo.Group) {
 	cart := repositories.RepositoryCart(mysql.DB)
-	h := handlers.HandlerCart(cart)
+	order := repositories.RepositoryOrder(mysql.DB)
+	h := handlers.HandlerCart(cart, order)
 
+	e.POST("/cart", h.CreateCart)
 	e.GET("/carts", h.FindCart)
-	e.DELETE("/cart/:id", h.DeleteCart)
 	e.GET("/cart/:id", h.GetCart)
 }
