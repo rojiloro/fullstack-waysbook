@@ -21,7 +21,6 @@ export default function Listbook() {
     return response.data.data;
   });
 
-  
   return (
     <>
       <div className="d-flex flex-wrap justify-content-center gap-3 mb-3">
@@ -35,7 +34,7 @@ export default function Listbook() {
             }}
           >
             <Card style={{ cursor: "pointer", width: "250px" }}>
-              <Card.Img src={data.thumbnail} />
+              <Card.Img src={data.thumbnail} style={{ height: "250px" }} />
               <Card.Body className="lh-1">
                 <Card.Title className="fs-4" style={{ fontFamily: "serif" }}>
                   {data.title}

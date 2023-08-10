@@ -1,16 +1,13 @@
 package handlers
 
 import (
-	"context"
 	"fmt"
 	"net/http"
-	"os"
+
 	dto "server/dto/result"
 	usersdto "server/dto/users"
 	"server/repositories"
 
-	"github.com/cloudinary/cloudinary-go/v2"
-	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
 	"github.com/go-playground/validator/v10"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/labstack/echo/v4"
@@ -46,12 +43,6 @@ func (h *handler) GetUser(c echo.Context) error {
 }
 
 func (h *handler) UpdateUser(c echo.Context) error {
-	var ctx = context.Background()
-	var CLOUD_NAME = os.Getenv("CLOUD_NAME")
-	var API_KEY = os.Getenv("API_KEY")
-	var API_SECRET = os.Getenv("API_SECRET")
-
-	cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
 
 	userLogin := c.Get("userLogin")
 	idUserLogin := userLogin.(jwt.MapClaims)["id"].(float64)
@@ -64,8 +55,6 @@ func (h *handler) UpdateUser(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()})
 	}
 
-	resp, err := cld.Upload.Upload(ctx, avatar, uploader.UploadParams{Folder: "waysbooks"})
-
 	if err != nil {
 		fmt.Println(err.Error())
 	}
@@ -74,7 +63,7 @@ func (h *handler) UpdateUser(c echo.Context) error {
 		Gender:  c.FormValue("gender"),
 		Address: c.FormValue("address"),
 		Phone:   c.FormValue("phone"),
-		Avatar:  resp.SecureURL,
+		Avatar:  avatar,
 	}
 
 	validation := validator.New()

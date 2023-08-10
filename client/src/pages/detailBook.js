@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Container, Image } from "react-bootstrap";
 import { BagCheck } from "react-bootstrap-icons";
-import { Link, useParams } from "react-router-dom";
-import book2 from "../assets/image/Rectangle 9.png";
+import { Link, useNavigate, useParams } from "react-router-dom";
+
 import { API } from "../config/api";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import moment from "moment";
 
 export default function DetailBook() {
   let { id } = useParams();
+  let navigate = useNavigate();
 
   let { data: book } = useQuery("detailCache", async () => {
     const response = await API.get(`/detailBook/` + id);
@@ -16,7 +17,25 @@ export default function DetailBook() {
     return response.data.data;
   });
 
-  const result = moment(book?.publication_date).format("Dd MMMM YYYY");
+  const result = moment(book?.publication_date).format("D MMMM YYYY");
+
+  const handleOrder = useMutation(async (formData) => {
+    try {
+      const response = await API.post("/order", formData);
+      console.log("beli buku berhasil", response);
+      navigate("/cart");
+    } catch (error) {
+      console.log("beli gagal", error);
+    }
+  });
+
+  const handlerOrderClick = (e) => {
+    e.preventDefault();
+    const formdata = new FormData();
+    formdata.set("book_id", id);
+
+    handleOrder.mutate(formdata);
+  };
 
   return (
     <>
@@ -65,7 +84,12 @@ export default function DetailBook() {
           </div>
           <Link to="/cart">
             <div style={{ textAlign: "end", marginTop: "2rem", marginBottom: "3rem" }}>
-              <Button variant="dark">
+              <Button
+                variant="dark"
+                onClick={(e) => {
+                  handlerOrderClick(e);
+                }}
+              >
                 Add Cart <BagCheck className="mx-1" />
               </Button>
             </div>

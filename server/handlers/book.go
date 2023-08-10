@@ -3,18 +3,12 @@ package handlers
 import (
 	"fmt"
 	"net/http"
-	"os"
 	booksdto "server/dto/books"
 	dto "server/dto/result"
 	"server/models"
 	"server/repositories"
 	"strconv"
 	"time"
-
-	"context"
-
-	"github.com/cloudinary/cloudinary-go/v2"
-	"github.com/cloudinary/cloudinary-go/v2/api/uploader"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
@@ -29,11 +23,6 @@ func HandlerBook(BookRepository repositories.BookRepository) *handlerBook {
 }
 
 func (h *handlerBook) AddBook(c echo.Context) error {
-	var ctx = context.Background()
-	var CLOUD_NAME = os.Getenv("CLOUD_NAME")
-	var API_KEY = os.Getenv("API_KEY")
-	var API_SECRET = os.Getenv("API_SECRET")
-
 	thumbnail := c.Get("dataFile").(string)
 	price, _ := strconv.Atoi(c.FormValue("price"))
 	pages, _ := strconv.Atoi(c.FormValue("pages"))
@@ -62,9 +51,6 @@ func (h *handlerBook) AddBook(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()})
 	}
 
-	cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
-	resp, err := cld.Upload.Upload(ctx, request.Thumbnail, uploader.UploadParams{Folder: "waysbooks"})
-
 	if err != nil {
 		fmt.Println(err.Error())
 	}
@@ -79,7 +65,7 @@ func (h *handlerBook) AddBook(c echo.Context) error {
 		Price:           request.Price,
 		Description:     request.Description,
 		BookAttachment:  request.BookAttachment,
-		Thumbnail:       resp.SecureURL,
+		Thumbnail:       request.Thumbnail,
 	}
 
 	data, err := h.BookRepositories.AddBook(book)

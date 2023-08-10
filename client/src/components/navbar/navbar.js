@@ -2,12 +2,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Navbar, Nav, Button, Dropdown } from "react-bootstrap";
 import { Image } from "react-bootstrap";
 import brand from "../../assets/image/Frame.png";
-import cart from "../../assets/image/Group (2).png";
+import cartIcon from "../../assets/image/Group (2).png";
 import Login from "../auth/Login";
 import Register from "../auth/Register";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ProfilePhoto from "../../assets/image/ruka.jpg";
 import knowledge from "../../assets/image/knowledge 1.png";
 import Chat from "../../assets/image/Group (1).png";
@@ -16,6 +16,7 @@ import iconProfile from "../../assets/image/user 2.png";
 
 import { API, setAuthToken } from "../../config/api";
 import { Book } from "react-bootstrap-icons";
+import { useQuery } from "react-query";
 
 export default function Header(props) {
   const [ShowLogin, setShowLogin] = useState(false);
@@ -29,6 +30,13 @@ export default function Header(props) {
       type: "LOGOUT",
     });
   };
+  
+  let { data: cart, refetch } = useQuery("orderNavCache", async () => {
+    const response = await API.get("/order-user");
+    console.log("response order user : ", response);
+    return response.data.data;
+  });
+
   return (
     <>
       <Navbar fixed="top" bg="light" data-bs-theme="light" style={{ width: "100%", boxShadow: "0px 0px 10px rgba(0,0,0,0.5)" }}>
@@ -80,8 +88,8 @@ export default function Header(props) {
                 <>
                   <Link to="/cart" style={{ marginTop: "1.2rem", marginRight: "1rem" }}>
                     <div>
-                      <span class="position-absolute translate-middle badge rounded-pill bg-danger">2</span>
-                      <img src={cart}></img>
+                      <span class="position-absolute translate-middle badge rounded-pill bg-danger">{cart?.length}</span>
+                      <img src={cartIcon}></img>
                     </div>
                   </Link>
                   <Dropdown>

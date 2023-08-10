@@ -16,4 +16,5 @@ func OrderRoutes(e *echo.Group) {
 	e.POST("/order", middleware.Auth(h.CreateOrder))
 	e.GET("/orders", h.FindOrder)
 	e.GET("/order-user", middleware.Auth(h.GetOrderbyUser))
+	e.DELETE("/order/:id", middleware.Auth(h.DeleteOrder))
 }

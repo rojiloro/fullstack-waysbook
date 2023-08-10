@@ -8,4 +8,5 @@ func RouteInit(e *echo.Group) {
 	BookRoutes(e)
 	OrderRoutes(e)
 	CartRoutes(e)
+	TransactionRoutes(e)
 }

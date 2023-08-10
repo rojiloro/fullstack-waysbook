@@ -6,5 +6,4 @@ type Order struct {
 	Book   BookOrderResponse   `json:"Book" gorm:"foreignkey:BookId"`
 	UserId int                 `json:"user_id"`
 	User   UserProfileResponse `json:"user"`
-	Qty    int                 `json:"qty"`
 }
