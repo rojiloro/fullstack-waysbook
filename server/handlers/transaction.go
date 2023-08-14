@@ -60,7 +60,7 @@ func (h *handlerTransaction) CreateTransaction(c echo.Context) error {
 	userId := userLogin.(jwt.MapClaims)["id"].(float64)
 
 	transaction := models.Transaction{
-		ID: transactionId,
+		ID:     transactionId,
 		Status: "pending",
 		UserId: int(userId),
 		Total:  request.Total,
@@ -85,7 +85,7 @@ func (h *handlerTransaction) CreateTransaction(c echo.Context) error {
 
 	var s = snap.Client{}
 	s.New(os.Getenv("SERVER_KEY"), midtrans.Sandbox)
-	
+
 	req := &snap.Request{
 		TransactionDetails: midtrans.TransactionDetails{
 			OrderID:  strconv.Itoa(data.ID),
@@ -158,19 +158,25 @@ func (h *handlerTransaction) Notification(c echo.Context) error {
 	if transactionStatus == "capture" {
 		if fraudStatus == "challenge" {
 			h.TransactionRepository.UpdateTransaction("pending", order_id)
+			fmt.Println("kondisi 1")
 		} else if fraudStatus == "accept" {
 			SendMail("Success", transaction)
 			h.TransactionRepository.UpdateTransaction("success", order_id)
+			fmt.Println("kondisi 2")
 		}
 	} else if transactionStatus == "settlement" {
 		SendMail("Success", transaction)
 		h.TransactionRepository.UpdateTransaction("success", order_id)
+		fmt.Println("kondisi 3")
 	} else if transactionStatus == "deny" {
 		h.TransactionRepository.UpdateTransaction("failed", order_id)
+		fmt.Println("kondisi 4")
 	} else if transactionStatus == "cancel" || transactionStatus == "expire" {
 		h.TransactionRepository.UpdateTransaction("failed", order_id)
+		fmt.Println("kondisi 5")
 	} else if transactionStatus == "pending" {
 		h.TransactionRepository.UpdateTransaction("pending", order_id)
+		fmt.Println("kondisi 6")
 	}
 
 	return c.JSON(http.StatusOK, dto.SuccessResult{Code: http.StatusOK, Data: notificationPayload})
@@ -230,4 +236,3 @@ func SendMail(status string, transaction models.Transaction) {
 		log.Println("Mail sent! to " + transaction.User.Email)
 	}
 }
-

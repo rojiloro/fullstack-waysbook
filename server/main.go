@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"server/database"
 	"server/pkg/mysql"
 	"server/routes"
@@ -12,6 +13,7 @@ import (
 
 func main() {
 	errEnv := godotenv.Load()
+
 	if errEnv != nil {
 		panic("failed load env!")
 	}
@@ -30,5 +32,6 @@ func main() {
 
 	e.Static("/uploads", "./uploads")
 
-	e.Logger.Fatal(e.Start(":5000"))
+	var PORT = os.Getenv("PORT")
+	e.Logger.Fatal(e.Start(":" + PORT)) //jika akan transaction hapus localhost
 }
