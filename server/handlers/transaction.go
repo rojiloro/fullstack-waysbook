@@ -191,7 +191,7 @@ func SendMail(status string, transaction models.Transaction) {
 		var CONFIG_AUTH_EMAIL = os.Getenv("EMAIL_SYSTEM")
 		var CONFIG_AUTH_PASSWORD = os.Getenv("PASSWORD_SYSTEM")
 
-		var productName = "WaysFood"
+		var productName = "WaysBook"
 		var price = strconv.Itoa(transaction.Total)
 
 		mailer := gomail.NewMessage()

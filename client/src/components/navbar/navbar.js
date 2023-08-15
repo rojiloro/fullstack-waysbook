@@ -94,7 +94,7 @@ export default function Header(props) {
                   </Link>
                   <Dropdown>
                     <Dropdown.Toggle style={{ background: "none", border: "none" }}>
-                      <Image src={state.user.avatar} className="border border-4 rounded-circle" style={{ width: "50px", height: "50px", marginTop: "0.6rem", cursor: "pointer" }} />
+                      <Image src= {state.user.avatar} className="border border-4 rounded-circle" style={{ width: "50px", height: "50px", marginTop: "0.6rem", cursor: "pointer" }} />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       <Dropdown.Item>
